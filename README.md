@@ -1,7 +1,7 @@
 # color stack
 ## Project Planning
 
-- [Project board] (https://github.com/users/rahafnabil/projects/3)
+- [Project board](https://github.com/users/rahafnabil/projects/3)
 - <img width="659" height="654" alt="color-stack-wireframe-v0 1" src="https://github.com/user-attachments/assets/269dda8b-d44a-47ea-9600-77375c587ad3" />
 
 
