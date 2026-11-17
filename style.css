@@ -1,7 +1,16 @@
-section{
+body{
     display: flex;
-    flex-direction: row;
-    p{
-        margin: 30px;
+    justify-content: center;
+    margin: 0 auto;
+    #easyGame{
+        display: flex;
+        align-items:center ;
+        background-color: aquamarine;
+        .easyStick{
+            min-width: ;
+
+            max-width: 200px;
+            margin: 50px;
+        }
     }
 }
