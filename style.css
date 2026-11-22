@@ -19,9 +19,9 @@ body{
     #easyGame{
         margin-top: 1rem;
         display: flex;
-        max-width: 70% ;
+        
         min-height: 70%;
-        width: 500px;
+        width: fit-content;
         height: 400px;
         justify-content: center;
         align-items: end;
@@ -32,24 +32,24 @@ body{
             width: 150px;
             height: 300px;
             
-            margin: 10px;
+            margin: 5px;
             background-image: url("assets/Color-stack-stick.PNG") ;
             background-size: cover;
             background-repeat: no-repeat;
-            background-position-y: top;
+            background-position-y: bottom;
             background-position-x: center;
-            justify-content: center;
+            justify-content: end;
             align-items: center;
             flex-direction: column-reverse;
-            padding: 0 0 0 0 ;
+            padding: 0 0 7% 0 ;
             
             .bead{
                 
                 min-height:26% ;
-                max-height: ;
+                
                 max-width: 30vw ;
                 width: 70% ;
-                height: %;
+                
                 
                 
                 
