@@ -1,16 +1,63 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+
+    
+}
 body{
     display: flex;
     justify-content: center;
-    margin: 0 auto;
-    #easyGame{
-        display: flex;
-        align-items:center ;
-        background-color: aquamarine;
-        .easyStick{
-            min-width: ;
+    align-items: center;
+    width: 200px;
+   height: 200px;
+    width: 100vw;
+    height: 100vh;
 
-            max-width: 200px;
-            margin: 50px;
+   
+    background-color: aquamarine;
+
+    #easyGame{
+        margin-top: 1rem;
+        display: flex;
+        max-width: 70% ;
+        min-height: 70%;
+        width: 500px;
+        height: 400px;
+        justify-content: center;
+        align-items: end;
+        border: 2px dotted black;
+        .easyStick{
+            display: flex;
+            border:2px dotted black;
+            width: 150px;
+            height: 300px;
+            
+            margin: 10px;
+            background-image: url("assets/Color-stack-stick.PNG") ;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position-y: top;
+            background-position-x: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column-reverse;
+            padding: 0 0 0 0 ;
+            
+            .bead{
+                
+                min-height:26% ;
+                max-height: ;
+                max-width: 30vw ;
+                width: 70% ;
+                height: %;
+                
+                
+                
+                
+                border:2px dotted black;
+
+            }
         }
+        
     }
 }
