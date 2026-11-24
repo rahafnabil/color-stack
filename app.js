@@ -41,38 +41,48 @@ function transformPiece(selectedStick,Sindex,distStickId,Dindex){
     console.log(bead)
 }
 function matchCheck(bead){
+    console.log(bead.src)
+    console.log(bead.src===fbead.src)
     
     return bead.src===fbead.src
     
 
 }
 function checkWin(){
+
     sticksBeadsArr.forEach((stick,index)=>{
         console.log(`stick${index+1}`)
-        if(sticksBeadsArr[index].length===3){
+        if(stick.length===3){
             console.log(`stick${index+1} again`)
             fbead=stick[0]
+            console.log(fbead)
+            console.log(`number of sticks before the check ${matchedStickCount}`)
             if(stick.every(matchCheck)){
-                console.log(`stick ${index+1} matched`)
+                //console.log(`after check and before run: matched sticks at stick${index+1} is: ${matchedStickCount}`)
+                
                 matchedStickCount++
-                if(matchedStickCount===3){
-
-                    console.log('yaaaaaay, a win')
-                    gameDone=true
-                    return true
-                }
-                else if(index===3 && matchedStickCount!==3){
-                    console.log(`stick ${index+1} entred `)
-                    matchedStickCount=0
-                    return false
-                }
+                console.log(`stick ${index+1} matched and count is ${matchedStickCount}`)
+                
             }
             //stick.every(matchCheck())   
             
            //console.log(`stick${index+1} applies`)
         }
+
         
     })
+    if(matchedStickCount===3){
+        matchedStickCount=0
+        
+        gameDone=true
+        return true
+    }
+    else{
+        console.log(matchedStickCount+"from the last else")
+        matchedStickCount=0
+        fbead=null
+        return false
+    }
     
 }
 
