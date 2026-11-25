@@ -9,12 +9,27 @@
     <script defer src="./app.js"></script>
 </head>
 <body>
-    <div id="timer"><p ><span>0</span>S</p></div>
+    <header>
+        <div id="timer"><span>0</span></div>
+        <p id="underTimer">seconds</p>
+        <img id="restartBtn" src="./assets/heart-charm.PNG" alt="">
+    </header>
     <dialog id="startPopUp">
         <h3>a color match is three pieces of the same color in one stick <br>
         color match all three colors before the timer rans out! </h3>
         <img src="" alt="">
         <button id="startBtn">start</button>
+    </dialog>
+    <dialog id="winPopUp">
+        <h3>Yaaaaaay, you won!</h3>
+        
+        <img src="" alt="">
+        <button id="startBtn">play again?</button>
+    </dialog>
+    <dialog id="losePopUp">
+        <h3>oh no, You lost</h3>
+        <img src="" alt="">
+        <button id="startBtn">play again?</button>
     </dialog>
 
     <div id="easyGame" class="game">

@@ -1,4 +1,20 @@
+//before u start correcting this concoction of code, i tried my best to make it readable (considering the time constraint) 
+// just remamber that i approciate ur work and wish u luck (pls dont curse me, my schadul is already cursed enough)
+
+const firstStickBeads=document.getElementById('firstStick').getElementsByClassName('bead')
+const secondStickBeads=document.getElementById('secondStick').getElementsByClassName('bead')
+const thirdStickBeads=document.getElementById('thirdStick').getElementsByClassName('bead')
+const fourthStickBeads=document.getElementById('fourthStick').getElementsByClassName('bead')
+const startPopUp=document.querySelector('#startPopUp')
+const winPopUp=document.querySelector('#winPopUp')
+const losePopUp=document.querySelector('#losePopUp')
+const timerEl = document.querySelector('#timer')
+const restartBtn=document.querySelector('#restartBtn')
+const startBtn=document.querySelector('#startPopUp #startBtn')
+const losePlayAgainBtn=document.querySelector('#losePopUp #startBtn')
+const winPlayAgainBtn=document.querySelector('#winPopUp #startBtn')
 const blueBead=document.createElement('img')
+const wintimedisp=document.querySelector('#winTime')
 blueBead.className='bead'
 blueBead.src = './assets/Blue-bead.png'
 const yellowBead=document.createElement('img')
@@ -8,14 +24,22 @@ const redBead=document.createElement('img')
 redBead.className='bead'
 redBead.src = './assets/Red-bead.PNG'
 //this array contain 9 beads (3 from each color)
-const randomizeArr=[redBead,redBead,blueBead,blueBead,redBead,yellowBead,yellowBead,yellowBead,blueBead]
+let randomizeArr=[redBead,redBead,blueBead,blueBead,redBead,yellowBead,yellowBead,yellowBead,blueBead]
 const easySticks=document.querySelectorAll(".easyStick")
+let sticksBeadsArr
+let gameDone=false
+let selectedEl
+let selectionInitiated= false
+let matchedStickCount=0
+let fbead
+let timeUp=false
 function randomize(){
     //console.log(randomizeArr)
     //console.log(randomizeArr.length)
     return (Math.floor(Math.random() * (randomizeArr.length)-1))
 
 }
+
 function randomizeOrder(){
     easySticks.forEach((stick,index)=>{
         if(index===easySticks.length-1){
@@ -38,6 +62,7 @@ function randomizeOrder(){
             //console.log(`after round ${index+1}: ${randomizeArr.length}`)
         }
     })
+    sticksBeadsArr=[[...firstStickBeads],[...secondStickBeads],[...thirdStickBeads],[...fourthStickBeads]]
 
     
     
@@ -47,25 +72,28 @@ function randomizeOrder(){
 //randomized , i must keep those get methods in order to have the 
 //code live loading the cotent from the sticks in case we restart a game mid session and also for the first game randomization
 
-const firstStickBeads=document.getElementById('firstStick').getElementsByClassName('bead')
-const secondStickBeads=document.getElementById('secondStick').getElementsByClassName('bead')
-const thirdStickBeads=document.getElementById('thirdStick').getElementsByClassName('bead')
-const fourthStickBeads=document.getElementById('fourthStick').getElementsByClassName('bead')
-const startPopUp=document.querySelector('#startPopUp')
-const timerEl = document.querySelector('#timer')
-const startBtn=document.querySelector('#startBtn')
 
 
-randomizeOrder()
-let sticksBeadsArr=[[...firstStickBeads],[...secondStickBeads],[...thirdStickBeads],[...fourthStickBeads]]
+window.addEventListener("DOMContentLoaded", () => {
+    // Open as a modal on page load
+    startPopUp.showModal();
+    console.log('it recived ')
+    // Close when clicking the button
+    startBtn.addEventListener("click", () => {
+      restart()
+      startPopUp.close();
+      
+    })
+
+
+})
+restartBtn.addEventListener('click',()=>{
+    restart()
+
+})
 
 
 
-let gameDone=false
-let selectedEl
-let selectionInitiated= false
-let matchedStickCount=0
-let fbead
 
 
 //here using the timer functionality
@@ -73,20 +101,41 @@ let timeLeft = 20
 let timerId = null
 timeLeft.textContent = timeLeft
 const updateTimer = () => {
-  timeLeft = timeLeft - 1
-  timerEl.textContent = timeLeft
+  if(!gameDone){
+    
+    timeLeft = timeLeft - 1
+    timerEl.textContent = timeLeft
+    if (timeLeft === 0) {
+        clearInterval(timerId)
+        timerId = null
+        timeUp=true
+        }
+    }
+    loseCheck()
+
 }
-window.addEventListener("DOMContentLoaded", () => {
-    // Open as a modal on page load
-    startPopUp.showModal();
-    console.log('it recived ')
-    // Close when clicking the button
+
+
+   /* winPopUp.showModal();
+    //console.log('it recived ')
     startBtn.addEventListener("click", () => {
       startPopUp.close();
+      timerId = setInterval(updateTimer, 1000)
+    })
+
+
+
+/*window.addEventListener("DOMContentLoaded", () => {
+    losePopUp.showModal();
+    //console.log('it recived ')
+    startBtn.addEventListener("click", () => {
+      startPopUp.close();
+      timerId = setInterval(updateTimer, 1000)
     })
 
 
 })
+    */
 
 
 
@@ -144,6 +193,35 @@ function checkWin(){
     }
     
 }
+function restart(){
+    easySticks.forEach((stick)=>{
+        stick.replaceChildren();
+
+    })
+    clearInterval(timerId)
+    timerId = null
+    randomizeArr=[redBead,redBead,blueBead,blueBead,redBead,yellowBead,yellowBead,yellowBead,blueBead]
+    gameDone=false
+    selectedEl=null
+    selectionInitiated= false
+    matchedStickCount=0
+    fbead=null
+    timeUp=false
+    timeLeft=20
+    timeLeft.textContent = timeLeft
+    randomizeOrder()
+    timerId = setInterval(updateTimer, 1000)
+
+}
+function loseCheck(){
+    if((timeUp) && (!gameDone)){
+        losePopUp.showModal();
+        losePlayAgainBtn.addEventListener("click", () => {
+            losePopUp.close();
+            restart()
+        })
+    }
+}
 
 
 
@@ -153,12 +231,20 @@ easySticks.forEach((stick,index)=>{
         console.log('ready for a pick')
         console.log(`selectionInitiated is:${selectionInitiated}, gameDone is:${gameDone}`)
         
-        if(!gameDone){
-                if(selectionInitiated && ((stick.childElementCount<3)||(index===selectedEl))){
+        if((!gameDone)&&(!timeUp)){
+            if(selectionInitiated && ((stick.childElementCount<3)||(index===selectedEl))){
                 console.log('here is the direction op')
                 transformPiece(sticksBeadsArr[selectedEl],selectedEl,sticksBeadsArr[index],index)
+                easySticks[selectedEl].style.border='none'
                 if(checkWin()){
-                  console.log('match')
+                  //console.log('match')
+                    winPopUp.showModal();
+                    winPlayAgainBtn.addEventListener("click", () => {
+                        winPopUp.close();
+                        restart()
+                           
+                    })
+                  
                 }
                 selectionInitiated=false
                 selectedEl=null
@@ -168,31 +254,39 @@ easySticks.forEach((stick,index)=>{
             else if(!selectionInitiated){
                 console.log('inside first selection queue')
                 if(index===0){
+                    stick.style.border="2px dotted red"
                     selectedEl=0
                     selectionInitiated=true
                     console.log('first selected')
 
                 }
                 else if(index===1){
+                    stick.style.border="2px dotted red"
                     selectedEl=1
                     selectionInitiated=true
                     console.log('second selected')
 
                 }
                 else if(index===2){
+                    stick.style.border="2px dotted red"
                     selectedEl=2
                     selectionInitiated=true
                     console.log('third selected')
 
                 }
                 else if(index===3){
+                    stick.style.border="2px dotted red"
                     selectedEl=3
                     selectionInitiated=true
                     console.log('fourth selected')
 
                 }
 
+
             }
+
         }
+
     })
 })
+

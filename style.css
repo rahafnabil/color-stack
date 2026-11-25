@@ -23,10 +23,10 @@ body:not(#timer){
         height: 400px;
         justify-content: center;
         align-items: end;
-        border:2px dotted black;
+        
         .easyStick{
             display: flex;
-            border:2px dotted black;
+            
             width: 150px;
             height: 320px;
             
@@ -52,7 +52,7 @@ body:not(#timer){
                 
                 
                 
-                border:2px dotted black;
+                
 
             }
 
@@ -60,11 +60,35 @@ body:not(#timer){
         
     }
 }   
-#timer{
+/*#timer{
     position: absolute;
     display: flex;
     
     background-color: azure;
+}*/
+#timer {
+    /*basically here i used this code , here the abso
+     i learned that ther top propertiy make sure that the element we are refrncing is */
+    position: absolute; /* Breaks free from body's flex rules */
+    top: 20px;          /* Distance from the top edge */
+    left: 50%;          /* Moves left edge to horizontal center */
+    transform: translateX(-50%); /* Shifts back by half its own width to center perfectly */
+
+    display: flex;
+    background-color: azure;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+#underTimer {
+    /*basically here i used this code , here the abso
+     i learned that ther top propertiy make sure that the element we are refrncing is */
+    position: absolute; 
+    top: 60px;         
+    left: 50%;         
+    transform: translateX(-50%);
+
+    display: flex;
+
 }
 dialog[open]{
         
@@ -86,5 +110,14 @@ dialog[open]{
     }
        
     margin: auto;
+
+}
+#restartBtn{
+    position: absolute; 
+    top: 10px;         
+    left: 90%;         
+    transform: translateX(-50%);
+    width: 100px;
+    
 
 }
