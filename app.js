@@ -1,32 +1,93 @@
-const Bead=document.querySelectorAll('.bead')
-const firstStickBeads=document.querySelectorAll('#firstStick .bead')
-const secondStickBeads=document.querySelectorAll('#secondStick .bead')
-const thirdStickBeads=document.querySelectorAll('#thirdStick .bead')
-const fourthStickBeads=document.querySelectorAll('#fourthStick .bead')
+const blueBead=document.createElement('img')
+blueBead.className='bead'
+blueBead.src = './assets/Blue-bead.png'
+const yellowBead=document.createElement('img')
+yellowBead.className='bead'
+yellowBead.src = './assets/Yellow-bead.png'
+const redBead=document.createElement('img')
+redBead.className='bead'
+redBead.src = './assets/Red-bead.PNG'
+//this array contain 9 beads (3 from each color)
+const randomizeArr=[redBead,redBead,blueBead,blueBead,redBead,yellowBead,yellowBead,yellowBead,blueBead]
 const easySticks=document.querySelectorAll(".easyStick")
-const sticksBeadsArr=[[...firstStickBeads],[...secondStickBeads],[...thirdStickBeads],[...fourthStickBeads]]
-//stickes selection counter 
+function randomize(){
+    //console.log(randomizeArr)
+    //console.log(randomizeArr.length)
+    return (Math.floor(Math.random() * (randomizeArr.length)-1))
+
+}
+function randomizeOrder(){
+    easySticks.forEach((stick,index)=>{
+        if(index===easySticks.length-1){
+            return
+        }
+        else{
+            //console.log((randomizeArr.splice(randomize(),1))[0])
+            console.log(index)
+             //console.log(randomizeArr[randomize()].pop())
+
+             //-->✨dear instructor , after carfull consideration , ive used this good looking .cloneNode(true) part
+             //and that's after what my wise eyes sow from benefits and gains in using such a part✨
+             //-->jk its bc only one bead of each color was showing and i found that in dom , sometimes the brawser missunderstand 
+             // reusing the same var that applies the dom as moving the created piece instead of actually creating a new one 
+             //sooo clone node ensure to tell brawser not to
+            // console.log(`before round ${index+1}: ${randomizeArr.length}`)
+            stick.appendChild(((randomizeArr.splice(randomize(),1))[0]).cloneNode(true))
+            stick.appendChild(((randomizeArr.splice(randomize(),1))[0]).cloneNode(true))
+            stick.appendChild(((randomizeArr.splice(randomize(),1))[0]).cloneNode(true))
+            //console.log(`after round ${index+1}: ${randomizeArr.length}`)
+        }
+    })
+
+    
+    
+
+}
+//-->👀ik this section under looks a bit suspicious but i figured out that in order to have the first board 
+//randomized , i must keep those get methods in order to have the 
+//code live loading the cotent from the sticks in case we restart a game mid session and also for the first game randomization
+
+const firstStickBeads=document.getElementById('firstStick').getElementsByClassName('bead')
+const secondStickBeads=document.getElementById('secondStick').getElementsByClassName('bead')
+const thirdStickBeads=document.getElementById('thirdStick').getElementsByClassName('bead')
+const fourthStickBeads=document.getElementById('fourthStick').getElementsByClassName('bead')
+const startPopUp=document.querySelector('#startPopUp')
+const timerEl = document.querySelector('#timer')
+const startBtn=document.querySelector('#startBtn')
+
+
+randomizeOrder()
+let sticksBeadsArr=[[...firstStickBeads],[...secondStickBeads],[...thirdStickBeads],[...fourthStickBeads]]
+
+
+
 let gameDone=false
 let selectedEl
 let selectionInitiated= false
 let matchedStickCount=0
 let fbead
-//console.log(sticksBeadsArr)
-//console.log(sticksBeadsArr[1])
-/*
-let firstStickSelected= false
-let secondStickSelected= false
-let thirdtickSelected= false
-let fourthStickSelected= false*/
-//this var will either 
-/*const Bead=document.querySelectorAll('#firstStick.bead')
-const Bead=document.querySelectorAll('.bead')
-const Bead=document.querySelectorAll('.bead')*/
-//console.log(firstStickBeads)
-//console.log(secondStickBeads)
-//console.log(thirdStickBeads)
-//console.log(fourthStickBeads)
-//console.dir(Bead)
+
+
+//here using the timer functionality
+let timeLeft = 20
+let timerId = null
+timeLeft.textContent = timeLeft
+const updateTimer = () => {
+  timeLeft = timeLeft - 1
+  timerEl.textContent = timeLeft
+}
+window.addEventListener("DOMContentLoaded", () => {
+    // Open as a modal on page load
+    startPopUp.showModal();
+    console.log('it recived ')
+    // Close when clicking the button
+    startBtn.addEventListener("click", () => {
+      startPopUp.close();
+    })
+
+
+})
+
 
 
 function transformPiece(selectedStick,Sindex,distStickId,Dindex){
@@ -64,9 +125,7 @@ function checkWin(){
                 console.log(`stick ${index+1} matched and count is ${matchedStickCount}`)
                 
             }
-            //stick.every(matchCheck())   
-            
-           //console.log(`stick${index+1} applies`)
+              
         }
 
         
@@ -85,6 +144,8 @@ function checkWin(){
     }
     
 }
+
+
 
 
 easySticks.forEach((stick,index)=>{
